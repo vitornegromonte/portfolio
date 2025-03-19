@@ -1,11 +1,10 @@
-import { useEffect, useState, useRef } from "react"; // Import useState
+import { useEffect, useState, useRef } from "react";
 import Footer from "@/components/Footer";
 import PaperCard from "@/components/PaperCard";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Thumb } from "@radix-ui/react-scroll-area";
 
 const Papers = () => {
-  const [activeTab, setActiveTab] = useState("papers"); // Track active tab
+  const [activeTab, setActiveTab] = useState("papers");
   const papersRef = useRef<HTMLDivElement>(null);
   const talksRef = useRef<HTMLDivElement>(null);
   
@@ -70,11 +69,21 @@ const Papers = () => {
       date: "Sep 2024",
       description: "Explored the current state and future directions of AI in Parkinson Diagnosys.",
       slidesUrl: "/cp_keynote.pdf",
-      thumbnail: "/cp_thumbnail.jpg"
+      thumbnail: "/cp_thumbnail.jpg",
+      videoUrl: "" // Added empty videoUrl property
+    },
+    {
+      id: 2,
+      title: 'Really Important Talk',
+      event: 'Life', // Fixed incorrect property name 'evento' to 'event'
+      location: 'World',
+      date: 'Eternity',
+      description: 'This is a really important talk that you should watch.',
+      videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+      thumbnail: 'https://t4.ftcdn.net/jpg/05/20/17/95/360_F_520179522_wrI8zucLkyCbBylaMXL8RMd8Jt4iniZR.jpg'
     }
   ];
 
- 
   return (
     <div className="bg-dark min-h-screen">
       {/* Header */}

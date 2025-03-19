@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Github, Mail, FileText, Linkedin, Instagram, BookOpenText  } from "lucide-react";
@@ -44,9 +43,8 @@ const Index = () => {
             <a href="http://instagram.com/vitor.ncabral" className="text-gray-700 hover:text-accent transition-colors">
               <Instagram size={24} />
             </a>
-
             <a href="http://medium.com/@vitornegromonte" className="text-gray-700 hover:text-accent transition-colors">
-            <BookOpenText x size={24} />
+              <BookOpenText size={24} />
             </a>
           </div>
         </div>

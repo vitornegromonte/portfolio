@@ -1,4 +1,3 @@
-
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
@@ -20,6 +19,6 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
-  // Base path for GitHub Pages
-  base: "https://vitornegromonte.github.io/",
+  // Base path must be set to "" for proper asset loading
+  base: "",
 }));

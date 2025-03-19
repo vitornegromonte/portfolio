@@ -32,7 +32,7 @@ const Art = () => {
     {
       id: 2,
       title: "Lissajous 3:5",
-      image: "public/lissa2.gif",
+      image: "lissa2.gif",
       technique: "Mathematics",
       year: "2025",
       description: "3:5 ratio",
@@ -41,7 +41,7 @@ const Art = () => {
     {
       id: 3,
       title: "Lissajous  3:4",
-      image: "public/lissa1.gif",
+      image: "lissa1.gif",
       technique: "Mathematics",
       year: "2025",
       description: "3:4 ratio",
