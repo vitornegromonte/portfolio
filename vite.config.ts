@@ -21,5 +21,5 @@ export default defineConfig(({ mode }) => ({
     },
   },
   // Base path for GitHub Pages
-  base: "/",
+  base: "https://vitornegromonte.github.io/",
 }));
