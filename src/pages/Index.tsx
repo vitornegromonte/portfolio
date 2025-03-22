@@ -13,7 +13,7 @@ const Index = () => {
         <div className="text-center max-w-3xl mx-auto">
           <div className="w-40 h-40 md:w-48 md:h-48 mx-auto rounded-full overflow-hidden border-2 border-gray-200 mb-8">
             <img 
-              src="vnco.JPG" 
+              src="vnco.jpg" 
               alt="Profile"
               className="w-full h-full object-cover"
             />
