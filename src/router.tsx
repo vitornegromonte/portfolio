@@ -60,17 +60,6 @@ const router = createBrowserRouter(
       ),
     },
     {
-      path: "/contact",
-      element: (
-        <>
-          <Sidebar />
-          <main className="pl-16 md:pl-60">
-            <Contact />
-          </main>
-        </>
-      ),
-    },
-    {
       path: "*",
       element: (
         <>

@@ -10,7 +10,8 @@ const Sidebar = () => {
     { name: "About", path: "/about", icon: <User size={20} /> },
     { name: "Projects", path: "/projects", icon: <Layers size={20} /> },
     { name: "Papers & Talks", path: "/papers", icon: <FileText size={20} /> },
-    { name: "Art", path: "/art", icon: <Paintbrush size={20} /> }
+    { name: "Art", path: "/art", icon: <Paintbrush size={20} /> },
+    { name: "Contact", path: "mailto:contato.vnco@gmail.com", icon: <Mail size={20} /> },
   ];
 
   return (
