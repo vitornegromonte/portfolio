@@ -130,7 +130,19 @@ const About = () => {
               
               <div className="space-y-8">
                 
-                
+                <div className="glass-morphism p-6 rounded-xl transition-all duration-300 hover:scale-102 hover:shadow-lg">
+                  <div className="flex justify-between items-start mb-2">
+                      <h4 className="text-xl font-medium">Machine Learning Engineer (Freelancer)</h4>
+                      <span className="text-accent">2025 - Present</span>
+                    </div>
+                    <p className="text-muted-foreground mb-2">Confidential Client – Global Company</p>
+                        <p className="text-sm text-muted-foreground">
+                        Designed and implemented a complete computer vision pipeline for edge deployment, including dataset creation, image pre-processing, model training, and inference. Managed cluster setup and optimization for efficient large-scale training. Work conducted under NDA, with a focus on scalable, resource-efficient solutions for AI on edge devices.
+                        <p className="text-sm text-muted-foreground">
+                        Tech stack: Python (PyTorch, OpenCV, FastAPI), Docker, Linux, Shell scripting, Git and more.
+                        </p>
+                    </p>
+                  </div>
 
                 <div className="glass-morphism p-6 rounded-xl transition-all duration-300 hover:scale-102 hover:shadow-lg">
                   <div className="flex justify-between items-start mb-2">
@@ -206,7 +218,7 @@ const About = () => {
                 <div className="glass-morphism p-6 rounded-xl transition-all duration-300 hover:scale-102 hover:shadow-lg">
                   <div className="flex justify-between items-start mb-2">
                     <h4 className="text-xl font-medium">Computational Creativity </h4>
-                    <span className="text-accent">2023 - Present</span>
+                    <span className="text-accent">2023 - 2025</span>
                   </div>
                   <p className="text-muted-foreground mb-2">Federal University of Pernambuco</p>
                   <p className="text-sm text-muted-foreground">
