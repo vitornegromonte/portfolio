@@ -41,18 +41,18 @@ const Papers = () => {
     {
       id: 1,
       title: "A Mapping Review to Understand Web and Mobile Apps Accessibility for Adults with Autism",
-      authors: "Danilo Monteiro Ribeiro, Felipe de Vasconcelos Melo, Vitor Cabral de Oliveira, Celeste Pereira, Ana Paula Chaves Steinmacher, Kiev Gama",
-      conference: "Brazilian Symposium on Information Systems (SBSI)",
+      authors: "D. M. Ribeiro, F. V. Melo, V. Cabral de Oliveira, C. Pereira, A. P. C. Steinmacher, K. Gama",
+      conference: "SBSI",
       year: "2025",
       abstract: "Addressing the need for more accessible applications for autistic adults, this mapping study reviews existing guidelines, frameworks, and evaluation instruments for mobile and web development.",
       tags: ["Software Engineering", "Accessibility"],
-      pdfUrl: "https://www.researchgate.net/publication/384968223_A_Mapping_Review_to_Understand_Web_and_Mobile_Apps_Accessibility_for_Adults_with_Autism"
+      pdfUrl: "https://sol.sbc.org.br/index.php/sbsi/article/view/34351"
     },
     {
       id: 2,
       title: "A Comparative Study on Accessibility for Autistic Individuals with Urban Mobility Apps",
-      authors: "Danilo M. Ribeiro, Felipe V. Melo, Vitor Negromonte, Gabriel W. Matias, Adna Farias, Celeste Azul, Ana Paula Chaves, Kiev Gama.",
-      conference: "Brazilian Symposium on Human Factors in Computing Systems (IHC)",
+      authors: "D. M. Ribeiro, F. V. Melo, V. Negromonte, G. W. Matias, A. Farias, C. Azul, A. P. Chaves, K. Gama.",
+      conference: "IHC",
       year: "2024",
       abstract: "This study investigates urban mobility app accessibility for autistic individuals. Using the GAIA framework, we analyze apps to identify design shortcomings related to visual and auditory experience, specifically the lack of customizable interface options (beyond visual impairment features) to reduce cognitive load.",
       tags: ["Software Engineering", "Accessibility"],
