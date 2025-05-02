@@ -19,32 +19,34 @@ const Index = () => {
             />
           </div>
           
-          <h1 className="text-gray-900 font-display text-4xl md:text-5xl mb-4">
+          <h1 className="text-gray-900 font-display text-3xl md:text-4xl mb-3 tracking-tight">
             Vitor Negromonte
           </h1>
           
-          <p className="text-gray-700 text-lg mb-2 max-w-2xl mx-auto leading-relaxed">
-            Data Scientist and AI Researcher. Conducting research in <span className="font-semibold">Generative AI</span> and <span className="font-semibold">Computer Vision</span>.
+          <p className="text-gray-600 mb-6 mx-auto leading-relaxed">
+            Data Scientist and AI Researcher specializing in 
+            <span className="text-accent"> Generative AI</span> and 
+            <span className="text-accent"> Computer Vision</span>
           </p>
-          
-          <div className="flex justify-center gap-6 mt-8">
-            <a href="cv.pdf" className="text-gray-700 hover:text-accent transition-colors">
-              <FileText size={24} />
+
+          <div className="flex justify-center gap-6 mt-7">
+            <a href="cv.pdf" className="text-gray-500 hover:text-accent transition-colors">
+              <FileText size={20} />
             </a>
-            <a href="mailto:contato.vnco@gmail.com" className="text-gray-700 hover:text-accent transition-colors">
-              <Mail size={24} />
+            <a href="mailto:contato.vnco@gmail.com" className="text-gray-500 hover:text-accent transition-colors">
+              <Mail size={20} />
             </a>
-            <a href="http://github.com/vitornegromonte" className="text-gray-700 hover:text-accent transition-colors">
-              <Github size={24} />
+            <a href="http://github.com/vitornegromonte" className="text-gray-500 hover:text-accent transition-colors">
+              <Github size={20} />
             </a>
-            <a href="http://linkedin.com/in/vitornegromonte" className="text-gray-700 hover:text-accent transition-colors">
-              <Linkedin size={24} />
+            <a href="http://linkedin.com/in/vitornegromonte" className="text-gray-500 hover:text-accent transition-colors">
+              <Linkedin size={20} />
             </a>
-            <a href="http://instagram.com/vitor.ncabral" className="text-gray-700 hover:text-accent transition-colors">
-              <Instagram size={24} />
+            <a href="http://instagram.com/vitor.ncabral" className="text-gray-500 hover:text-accent transition-colors">
+              <Instagram size={20} />
             </a>
-            <a href="http://medium.com/@vitornegromonte" className="text-gray-700 hover:text-accent transition-colors">
-              <BookOpenText size={24} />
+            <a href="http://medium.com/@vitornegromonte" className="text-gray-500 hover:text-accent transition-colors">
+              <BookOpenText size={20} />
             </a>
           </div>
         </div>

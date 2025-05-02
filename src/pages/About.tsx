@@ -57,7 +57,7 @@ const About = () => {
       
       {/* Bio Section */}
       <section ref={bioRef} className="py-16 section-fade-in">
-        <div className="container mx-auto">
+      <div className="container mx-auto">
           <div className="flex flex-col md:flex-row gap-12 items-center">
           <div className="md:w-1/3">
               <div className="relative">
@@ -76,7 +76,7 @@ const About = () => {
             <div className="md:w-2/3">
               <h2 className="text-3xl font-display mb-6">My Journey</h2>
               <p className="text-muted-foreground mb-4">
-              Undergraduate Statistics student at the Federal University of Pernambuco (UFPE), with a focus on machine learning.Served as a teaching assistant for Computational Creativity and Introduction to Deep Learning, under professors Filipe Calegario and Tsang Ing Ren, respectively.
+              Undergraduate Statistics student at the Federal University of Pernambuco (UFPE), with a focus on machine learning. Served as a teaching assistant for Computational Creativity and Introduction to Deep Learning, under professors Filipe Calegario and Tsang Ing Ren, respectively.
               </p>
               <p className="text-muted-foreground mb-4">
               As a sophomore, joined the National Institute of Software Engineering as an undergraduate researcher in Human-Computer Interaction (Smart Cities and IoT group). Advised by professor Kiev Gama, co-advised by Ana Paula Chaves (NAU) and Danilo Ribeiro (Cesar School). Co-authored papers accepted at IHC 2024 and SBSI 2025 (Brazilian Computer Society conferences).
@@ -90,7 +90,7 @@ const About = () => {
               <p className="text-muted-foreground mb-4">
               Co-founded the start-up redduo.ai, serving as Chief Data Officer/co-Chief Technology Officer before departing within the first year.
               </p>
-              <p className="text-muted-foreground">
+              <p className="text-muted-foreground mb-4">
                 Beyond research, I enjoy photography, reading, sports, and creative coding.
               </p>
             </div>
@@ -108,10 +108,22 @@ const About = () => {
               <h3 className="text-xl font-display mb-6">Education</h3>
               
               <div className="space-y-8">
+              <div className="glass-morphism p-6 rounded-xl transition-all duration-300 hover:scale-102 hover:shadow-lg">
+
+                  <div className="flex justify-between items-start mb-2">
+                    <h4 className="text-xl font-medium">B.Sc. in Information System</h4>
+                    <span className="text-accent">2025 - Present</span>
+                  </div>
+                  <p className="text-muted-foreground mb-2">Federal University of Pernambuco</p>
+                  <p className="text-sm text-muted-foreground">
+                    After three years majoring in Statistics, transferred to Information Systems/Computer Science.
+                  </p>
+                </div>
+
                 <div className="glass-morphism p-6 rounded-xl transition-all duration-300 hover:scale-102 hover:shadow-lg">
                   <div className="flex justify-between items-start mb-2">
                     <h4 className="text-xl font-medium">B.Sc. in Statistics</h4>
-                    <span className="text-accent">2022 - Present</span>
+                    <span className="text-accent">2022 - 2024</span>
                   </div>
                   <p className="text-muted-foreground mb-2">Federal University of Pernambuco</p>
                   <p className="text-sm text-muted-foreground">
