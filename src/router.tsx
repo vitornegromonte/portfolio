@@ -1,12 +1,10 @@
+
 import { createBrowserRouter } from "react-router-dom";
 import Index from "./pages/Index";
 import About from "./pages/About";
 import Projects from "./pages/Projects";
 import Papers from "./pages/Papers";
-import Art from "./pages/Art";
-import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
-import Sidebar from "./components/Sidebar";
 
 // Create routes with the correct base name
 const router = createBrowserRouter(
@@ -17,58 +15,19 @@ const router = createBrowserRouter(
     },
     {
       path: "/about",
-      element: (
-        <>
-          <Sidebar />
-          <main className="pl-16 md:pl-60">
-            <About />
-          </main>
-        </>
-      ),
+      element: <About />,
     },
     {
       path: "/projects",
-      element: (
-        <>
-          <Sidebar />
-          <main className="pl-16 md:pl-60">
-            <Projects />
-          </main>
-        </>
-      ),
+      element: <Projects />,
     },
     {
       path: "/papers",
-      element: (
-        <>
-          <Sidebar />
-          <main className="pl-16 md:pl-60">
-            <Papers />
-          </main>
-        </>
-      ),
-    },
-    {
-      path: "/art",
-      element: (
-        <>
-          <Sidebar />
-          <main className="pl-16 md:pl-60">
-            <Art />
-          </main>
-        </>
-      ),
+      element: <Papers />,
     },
     {
       path: "*",
-      element: (
-        <>
-          <Sidebar />
-          <main className="pl-16 md:pl-60">
-            <NotFound />
-          </main>
-        </>
-      ),
+      element: <NotFound />,
     },
   ],
   { basename: "" }

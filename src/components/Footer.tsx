@@ -13,7 +13,7 @@ const Footer = () => {
               to="/" 
               className="text-xl font-display tracking-tight"
             >
-              <span className="text-accent">Vitor</span>
+              <span className="text-gray-800">Vitor</span>
               <span className="text-gray-800"> Negromonte</span>
             </Link>
           </div>

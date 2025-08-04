@@ -8,7 +8,7 @@ import {
   CollapsibleContent
 } from "@/components/ui/collapsible";
 import { Calendar } from "lucide-react";
-import { title } from "process";
+import Navbar from "@/components/Navbar";
 
 const About = () => {
   // Refs for sections that will fade in
@@ -50,24 +50,11 @@ const About = () => {
     const [showFullBio, setShowFullBio] = useState(false);
 
     return (
-      <section ref={bioRef} className="py-16 section-fade-in">
+
+      <section ref={bioRef} className="py-16 section-fade-in max-w-3xl mx-auto">
         <div className="container mx-auto">
-          <div className="flex flex-col md:flex-row gap-12 items-center">
-            <div className="md:w-1/3">
-              <div className="relative">
-                <div className="aspect-square w-full max-w-md rounded-xl overflow-hidden border border-accent/20 transition-all duration-300 hover:scale-102 hover:shadow-lg">
-                  <img 
-                    src="crew.jpg" 
-                    alt="Vitor" 
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-accent/20 rounded-full filter blur-[50px]"></div>
-                <div className="absolute -top-6 -left-6 w-32 h-32 bg-blue/20 rounded-full filter blur-[50px]"></div>
-              </div>
-            </div>
-            
-            <div className="md:w-2/3">
+          <div className="flex flex-col md:flex-row gap-12 items-center">            
+            <div className="">
               <h2 className="text-3xl font-display mb-6">My Journey</h2>
               
               {!showFullBio ? (
@@ -83,9 +70,9 @@ const About = () => {
                   <Button 
                     onClick={() => setShowFullBio(true)} 
                     variant="ghost"
-                    className="text-muted-foreground hover:text-accent-foreground mt-3 transition-colors duration-200"
+                    className="text-muted-foreground transition-colors duration-200"
                   >
-                    Long bio...
+                    Long bio
                   </Button>
                 </>
               ) : (
@@ -111,9 +98,9 @@ const About = () => {
                   <Button 
                     onClick={() => setShowFullBio(false)} 
                     variant="ghost"
-                    className="text-muted-foreground hover:text-accent-foreground mt-3 transition-colors duration-200"
+                    className="text-muted-foreground transition-colors duration-200"
                   >
-                    Short bio...
+                    Short bio
                   </Button>
                 </div>
               )}
@@ -127,7 +114,7 @@ const About = () => {
   // Header component
   const Header = () => {
     return (
-      <section className="pt-32 pb-16 px-4">
+      <section className="">
         <div className="container mx-auto text-center">
           <span className="text-sm uppercase tracking-wider text-accent mb-2 inline-block">About Me</span>
           <h1 className="font-display mb-6">The Story So Far</h1>
@@ -154,7 +141,7 @@ const About = () => {
     }
 
     const ExperienceItem = ({ title, period, organization, description }: SectionItem) => (
-      <div className="glass-morphism p-6 rounded-xl transition-all duration-300 hover:scale-102 hover:shadow-lg">
+      <div className="glass-morphism p-6 border border-gray-200 rounded-xl transition-all duration-300 hover:scale-102 hover:shadow-md">
         <div className="flex justify-between items-start mb-2">
           <h4 className="text-xl font-medium">{title}</h4>
           <span className="text-accent">{period}</span>
@@ -254,7 +241,7 @@ const About = () => {
     ];
 
     return (
-      <section ref={educationRef} className="py-16 bg-dark-accent section-fade-in">
+      <section ref={educationRef} className="py-16 section-fade-in">
         <div className="container mx-auto">
           <h2 className="text-3xl font-display mb-10 text-center">Education & Experience</h2>
           
@@ -319,7 +306,6 @@ const About = () => {
                 className={`${showLabels ? 'h-12 w-12 mb-2' : 'h-16 w-16'}`} 
                 alt={item.name || "Skill"} 
               />
-              {showLabels && item.name && <span className="text-xs font-medium">{item.name}</span>}
             </div>
           ))}
         </div>
@@ -330,14 +316,14 @@ const About = () => {
       <div>
         <h3 className="text-xl font-display mt-12 mb-6">Research Interests</h3>
         <div className="glass-morphism p-6 rounded-xl transition-all duration-300 hover:bg-accent/0 hover:shadow-lg">
-          <ul className="space-y-2 text-muted-foreground grid grid-cols-2 sm:grid-cols-2">
+          <ul className="space-y-2 text-muted-foreground grid grid-cols-1 sm:grid-cols-1">
             {[
               "Bio-inspired computing", 
-              "AI for Creative Applications", 
               "Computer Vision & Image Processing", 
-              "Spiking Neural Networks", 
-              "Energy-based models", 
-              "Natural Language Processing"
+              "Efficient AI/TinyML", 
+              "Diffusion and Energy-based models", 
+              "Meta-learning",
+              "Reinforcement Learning",
             ].map((interest, index) => (
               <li key={index} className="flex items-center gap-2">
                 <div className="w-2 h-2 rounded-full bg-accent"></div>
@@ -376,7 +362,7 @@ const About = () => {
         <div className="container mx-auto">
           <h2 className="text-3xl font-display mb-10 text-center">Skills & Interests</h2>
           
-          <div className="grid grid-cols-1 md:grid-cols-1 gap-12 max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-1 gap-12 max-w-3xl mx-auto">
             <SkillsGroup title="Programming Languages" items={programmingLanguages} />
             
             <div>
@@ -388,13 +374,15 @@ const About = () => {
       </section>
     );
   };
-
-  return (
-    <div className="bg-dark min-h-screen">
-      <Header />
-      <Bio />
-      <Education />
-      <Skills />
+   return (
+    <div className="bg-white min-h-screen">
+      <Navbar />
+      <main className="pt-28 md:pt-32 pb-20 px-4">
+        <Header />
+        <Bio />
+        <Education />
+        <Skills />
+      </main>
       <Footer />
     </div>
   );

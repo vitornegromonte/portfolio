@@ -15,6 +15,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Filter, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import Navbar from "@/components/Navbar";
 
 const Projects = () => {
   const [tagFilter, setTagFilter] = useState<string | null>(null);
@@ -39,16 +40,21 @@ const Projects = () => {
   
   return (
     <div className="bg-white min-h-screen">
+      <Navbar />
       <main className="p-8">
-        <div className="pt-8 pb-12">
-          <span className="text-sm uppercase tracking-wider text-accent mb-2 inline-block">My Work</span>
-          <h1 className="text-gray-900 font-display text-3xl md:text-4xl mb-4">Projects</h1>
-          <p className="text-gray-600 max-w-2xl">
+        <section className="pt-32 pb-16 px-4">
+        <div className="container mx-auto text-center">
+          <span className="text-sm uppercase tracking-wider text-accent mb-2 inline-block">
+            My Work
+          </span>
+          <h1 className="font-display mb-6">Projects</h1>
+          <p className="text-muted-foreground max-w-2xl mx-auto">
             Browse through my coding projects done in my free time.
           </p>
         </div>
-        
-        <div className="space-y-6 mb-8">
+        </section>
+
+        <div className="space-y-4 mb-8 container mx-auto max-w-3xl">
           {/* Filter stats and controls */}
           <div className="flex flex-wrap justify-between items-center gap-2">
             <p className="text-sm text-gray-500">
@@ -143,7 +149,7 @@ const Projects = () => {
           )}
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-8 container mx-auto max-w-3xl">
           {filteredProjects.map(project => (
             <ProjectCard
               key={project.id}

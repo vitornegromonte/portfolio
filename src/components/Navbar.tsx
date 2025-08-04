@@ -14,7 +14,6 @@ const Navbar = () => {
     { name: "About", path: "/about" },
     { name: "Projects", path: "/projects" },
     { name: "Papers", path: "/papers" },
-    { name: "Art", path: "/art" },
   ];
 
   useEffect(() => {
@@ -43,7 +42,7 @@ const Navbar = () => {
           to="/" 
           className="text-xl font-display tracking-tight text-gray-900 hover:opacity-80 transition-opacity"
         >
-          <span className="text-accent">Vitor </span>
+          <span>Vitor </span>
           <span>Negromonte</span>
         </Link>
 

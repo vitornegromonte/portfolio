@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import Footer from "@/components/Footer";
 import PaperCard from "@/components/PaperCard";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import Navbar from "@/components/Navbar";
 
 const Papers = () => {
   const [activeTab, setActiveTab] = useState("papers");
@@ -44,7 +45,6 @@ const Papers = () => {
       authors: "D. M. Ribeiro, F. V. Melo, V. Cabral de Oliveira, C. Pereira, A. P. C. Steinmacher, K. Gama",
       conference: "SBSI",
       year: "2025",
-      abstract: "Addressing the need for more accessible applications for autistic adults, this mapping study reviews existing guidelines, frameworks, and evaluation instruments for mobile and web development.",
       tags: ["Software Engineering", "Accessibility"],
       pdfUrl: "https://sol.sbc.org.br/index.php/sbsi/article/view/34351"
     },
@@ -54,7 +54,6 @@ const Papers = () => {
       authors: "D. M. Ribeiro, F. V. Melo, V. Negromonte, G. W. Matias, A. Farias, C. Azul, A. P. Chaves, K. Gama.",
       conference: "IHC",
       year: "2024",
-      abstract: "This study investigates urban mobility app accessibility for autistic individuals. Using the GAIA framework, we analyze apps to identify design shortcomings related to visual and auditory experience, specifically the lack of customizable interface options (beyond visual impairment features) to reduce cognitive load.",
       tags: ["Software Engineering", "Accessibility"],
       pdfUrl: "https://sol.sbc.org.br/index.php/ihc/article/view/32895"
     }
@@ -86,6 +85,7 @@ const Papers = () => {
 
   return (
     <div className="bg-dark min-h-screen">
+      <Navbar />
       {/* Header */}
       <section className="pt-32 pb-16 px-4">
         <div className="container mx-auto text-center">
@@ -101,7 +101,7 @@ const Papers = () => {
       </section>
 
       {/* Tabs Navigation */}
-      <section className="py-4 px-4">
+      <section className="py-4 px-4 ">
         <div className="container mx-auto">
           <Tabs defaultValue="papers" className="w-full" onValueChange={setActiveTab}>
             {/* Tab List */}
@@ -125,8 +125,8 @@ const Papers = () => {
 
             {/* Papers Tab */}
             <TabsContent value="papers" key="papers" className="mt-0">
-              <div className="container mx-auto">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 transition-opacity duration-500 ease-in-out opacity-100 ">
+              <div className="container mx-auto max-w-3xl">
+                <div className="grid grid-cols-1 md:grid-cols-1 gap-8 transition-opacity duration-500 ease-in-out opacity-100 container mx-auto">
                   {papers.length > 0 ? (
                     papers.map((paper) => (
                       <PaperCard
@@ -135,7 +135,6 @@ const Papers = () => {
                         authors={paper.authors}
                         conference={paper.conference}
                         year={paper.year}
-                        abstract={paper.abstract}
                         tags={paper.tags}
                         pdfUrl={paper.pdfUrl}
                       />
@@ -151,7 +150,7 @@ const Papers = () => {
 
             {/* Talks Tab */}
             <TabsContent value="talks" key="talks" className="mt-0">
-              <div className="container mx-auto">
+              <div className="container mx-auto max-w-3xl">
                 <div className="grid grid-cols-1 gap-6 transition-opacity duration-500 ease-in-out opacity-100">
                   {talks.length > 0 ? (
                     talks.map((talk) => (

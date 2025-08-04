@@ -33,63 +33,98 @@ const ProjectCard = ({
   const [isHovered, setIsHovered] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
+  const handleLinkClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+  };
+
+  const renderActionButtons = (isDetailView = false) => (
+    <div className={`flex gap-3 ${!isDetailView ? "mt-auto" : "pt-4"}`}>
+      {githubUrl && (
+        <Button 
+          variant="outline" 
+          size={isDetailView ? "default" : "sm"} 
+          asChild 
+          className="gap-2"
+          onClick={!isDetailView ? handleLinkClick : undefined}
+        >
+          <a href={githubUrl} target="_blank" rel="noopener noreferrer">
+            <Github size={16} />
+            <span>{isDetailView ? "View Code" : "Code"}</span>
+          </a>
+        </Button>
+      )}
+      
+      {liveUrl && (
+        <Button 
+          size={isDetailView ? "default" : "sm"} 
+          asChild 
+          className="gap-2"
+          onClick={!isDetailView ? handleLinkClick : undefined}
+        >
+          <a href={liveUrl} target="_blank" rel="noopener noreferrer">
+            <ExternalLink size={16} />
+            <span>{isDetailView ? "View Demo" : "Demo"}</span>
+          </a>
+        </Button>
+      )}
+    </div>
+  );
+
   return (
     <>
       <Card 
         className={cn(
-          "overflow-hidden hover-card border border-gray-200 bg-white cursor-pointer h-[360px]",
+          "glass-morphism overflow-hidden hover-card border border-gray-200 bg-white cursor-pointer h-[360px] transition-all duration-300 hover:shadow-md",
           className
         )}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         onClick={() => setIsOpen(true)}
+        role="button"
+        tabIndex={0}
+        aria-label={`Open details for ${title}`}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            setIsOpen(true);
+          }
+        }}
       >
         <div className="relative overflow-hidden h-[160px]">
           <img
             src={image}
-            alt={title}
+            alt={`Project thumbnail: ${title}`}
             className={cn(
               "w-full h-full object-cover transition-transform duration-700",
               isHovered ? "scale-110" : "scale-100"
             )}
+            loading="lazy"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
           
-          <div className="absolute bottom-0 left-0 p-4 w-full">
-            <div className="flex flex-wrap gap-2 mb-2">
-              {categories.map((categories) => (
-                <Badge key={categories} variant="secondary" className="bg-black/50 text-white text-xs">
-                  {categories}
-                </Badge>
-              ))}
+          {categories.length > 0 && (
+            <div className="absolute bottom-0 left-0 p-4 w-full">
+              <div className="flex flex-wrap gap-2 mb-2">
+                {categories.map((category) => (
+                  <Badge 
+                    key={category} 
+                    variant="secondary" 
+                    className="bg-black/50 text-white text-xs"
+                  >
+                    {category}
+                  </Badge>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
         </div>
         
-        <div className="p-5 flex flex-col h-[200px]">
+        <div className="p-5 flex flex-col h-[120px]">
           <h3 className="text-xl font-display mb-2 text-gray-900">{title}</h3>
           <p className="text-gray-600 text-sm mb-4 line-clamp-3">{description}</p>
           
-          <div className="flex gap-3 mt-auto">
-            {githubUrl && (
-              <Button variant="outline" size="sm" asChild className="gap-2" onClick={(e) => e.stopPropagation()}>
-                <a href={githubUrl} target="_blank" rel="noopener noreferrer">
-                  <Github size={16} />
-                  <span>Code</span>
-                </a>
-              </Button>
-            )}
-            
-            {liveUrl && (
-              <Button size="sm" asChild className="gap-2" onClick={(e) => e.stopPropagation()}>
-                <a href={liveUrl} target="_blank" rel="noopener noreferrer">
-                  <ExternalLink size={16} />
-                  <span>Demo</span>
-                </a>
-              </Button>
-            )}
-          </div>
         </div>
+        
       </Card>
 
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -98,7 +133,7 @@ const ProjectCard = ({
             <div className="aspect-video w-full h-[320px]">
               <img 
                 src={image} 
-                alt={title} 
+                alt={`Project preview: ${title}`} 
                 className="w-full h-full object-cover"
               />
             </div>
@@ -116,7 +151,10 @@ const ProjectCard = ({
                     <h4 className="text-sm font-medium text-gray-500 mb-2">Categories</h4>
                     <div className="flex flex-wrap gap-2">
                       {categories.map((category) => (
-                        <Badge key={category} className="bg-accent/10 text-accent hover:bg-accent/20 border-accent/20">
+                        <Badge 
+                          key={category} 
+                          className="bg-accent/10 text-accent hover:bg-accent/20 border-accent/20"
+                        >
                           {category}
                         </Badge>
                       ))}
@@ -135,25 +173,7 @@ const ProjectCard = ({
                   </div>
                 </div>
                 
-                <div className="flex gap-3 pt-4">
-                  {githubUrl && (
-                    <Button variant="outline" asChild className="gap-2">
-                      <a href={githubUrl} target="_blank" rel="noopener noreferrer">
-                        <Github size={16} />
-                        <span>View Code</span>
-                      </a>
-                    </Button>
-                  )}
-                  
-                  {liveUrl && (
-                    <Button asChild className="gap-2">
-                      <a href={liveUrl} target="_blank" rel="noopener noreferrer">
-                        <ExternalLink size={16} />
-                        <span>View Demo</span>
-                      </a>
-                    </Button>
-                  )}
-                </div>
+                {renderActionButtons(true)}
               </div>
             </div>
           </ScrollArea>
