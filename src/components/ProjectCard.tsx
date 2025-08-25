@@ -38,13 +38,13 @@ const ProjectCard = ({
   };
 
   const renderActionButtons = (isDetailView = false) => (
-    <div className={`flex gap-3 ${!isDetailView ? "mt-auto" : "pt-4"}`}>
+    <div className={`flex gap-3 ${!isDetailView ? "mt-4" : "pt-4"}`}>
       {githubUrl && (
         <Button 
           variant="outline" 
           size={isDetailView ? "default" : "sm"} 
           asChild 
-          className="gap-2"
+          className=""
           onClick={!isDetailView ? handleLinkClick : undefined}
         >
           <a href={githubUrl} target="_blank" rel="noopener noreferrer">
@@ -58,7 +58,7 @@ const ProjectCard = ({
         <Button 
           size={isDetailView ? "default" : "sm"} 
           asChild 
-          className="gap-2"
+          className="gap-2 bg-accent text-accent-foreground hover:bg-accent/90"
           onClick={!isDetailView ? handleLinkClick : undefined}
         >
           <a href={liveUrl} target="_blank" rel="noopener noreferrer">
@@ -74,7 +74,7 @@ const ProjectCard = ({
     <>
       <Card 
         className={cn(
-          "glass-morphism overflow-hidden hover-card border border-gray-200 bg-white cursor-pointer h-[360px] transition-all duration-300 hover:shadow-md",
+          "glass-morphism overflow-hidden hover-card border border-border bg-card cursor-pointer h-[320px] transition-all duration-300 hover:shadow-md",
           className
         )}
         onMouseEnter={() => setIsHovered(true)}
@@ -101,36 +101,18 @@ const ProjectCard = ({
             loading="lazy"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
-          
-          {categories.length > 0 && (
-            <div className="absolute bottom-0 left-0 p-4 w-full">
-              <div className="flex flex-wrap gap-2 mb-2">
-                {categories.map((category) => (
-                  <Badge 
-                    key={category} 
-                    variant="secondary" 
-                    className="bg-black/50 text-white text-xs"
-                  >
-                    {category}
-                  </Badge>
-                ))}
-              </div>
-            </div>
-          )}
         </div>
         
         <div className="p-5 flex flex-col h-[120px]">
-          <h3 className="text-xl font-display mb-2 text-gray-900">{title}</h3>
-          <p className="text-gray-600 text-sm mb-4 line-clamp-3">{description}</p>
-          
+          <h3 className="text-xl font-display mb-2 text-foreground">{title}</h3>
+          <p className="text-muted-foreground text-sm mb-4 line-clamp-2">{description}</p>
         </div>
-        
       </Card>
 
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <DialogContent className="max-w-4xl p-0 overflow-hidden max-h-[90vh]">
+        <DialogContent className="max-w-4xl p-0 overflow-hidden max-h-[90vh] bg-background border-border">
           <ScrollArea className="max-h-[90vh]">
-            <div className="aspect-video w-full h-[320px]">
+            <div className="aspect-video w-full h-[300px]">
               <img 
                 src={image} 
                 alt={`Project preview: ${title}`} 
@@ -139,8 +121,8 @@ const ProjectCard = ({
             </div>
             <div className="p-6">
               <DialogHeader>
-                <DialogTitle className="text-2xl font-display">{title}</DialogTitle>
-                <DialogDescription className="text-base text-gray-700 mt-2">
+                <DialogTitle className="text-2xl font-display text-foreground">{title}</DialogTitle>
+                <DialogDescription className="text-base text-muted-foreground mt-2">
                   {detailedDescription || description}
                 </DialogDescription>
               </DialogHeader>
@@ -148,7 +130,7 @@ const ProjectCard = ({
               <div className="mt-6 space-y-4">
                 {categories && categories.length > 0 && (
                   <div>
-                    <h4 className="text-sm font-medium text-gray-500 mb-2">Categories</h4>
+                    <h4 className="text-sm font-medium text-muted-foreground mb-2">Categories</h4>
                     <div className="flex flex-wrap gap-2">
                       {categories.map((category) => (
                         <Badge 
@@ -163,10 +145,10 @@ const ProjectCard = ({
                 )}
                 
                 <div>
-                  <h4 className="text-sm font-medium text-gray-500 mb-2">Technologies</h4>
+                  <h4 className="text-sm font-medium text-muted-foreground mb-2">Technologies</h4>
                   <div className="flex flex-wrap gap-2">
                     {tags.map((tag) => (
-                      <Badge key={tag} variant="outline" className="bg-gray-50">
+                      <Badge key={tag} variant="outline" className="bg-muted/50 border-border text-muted-foreground">
                         {tag}
                       </Badge>
                     ))}

@@ -3,6 +3,7 @@ import Footer from "@/components/Footer";
 import PaperCard from "@/components/PaperCard";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Navbar from "@/components/Navbar";
+import { papers, talks } from "@/lib/generatedContentLoader";
 
 const Papers = () => {
   const [activeTab, setActiveTab] = useState("papers");
@@ -38,53 +39,8 @@ const Papers = () => {
     };
   }, []);
 
-  const papers = [
-    {
-      id: 1,
-      title: "A Mapping Review to Understand Web and Mobile Apps Accessibility for Adults with Autism",
-      authors: "D. M. Ribeiro, F. V. Melo, V. Cabral de Oliveira, C. Pereira, A. P. C. Steinmacher, K. Gama",
-      conference: "SBSI",
-      year: "2025",
-      tags: ["Software Engineering", "Accessibility"],
-      pdfUrl: "https://sol.sbc.org.br/index.php/sbsi/article/view/34351"
-    },
-    {
-      id: 2,
-      title: "A Comparative Study on Accessibility for Autistic Individuals with Urban Mobility Apps",
-      authors: "D. M. Ribeiro, F. V. Melo, V. Negromonte, G. W. Matias, A. Farias, C. Azul, A. P. Chaves, K. Gama.",
-      conference: "IHC",
-      year: "2024",
-      tags: ["Software Engineering", "Accessibility"],
-      pdfUrl: "https://sol.sbc.org.br/index.php/ihc/article/view/32895"
-    }
-  ];
-
-  const talks = [
-    {
-      id: 1,
-      title: "Parkinson Diagnosis using Computer Vision",
-      event: "Campus Party",
-      location: "Recife, Brazil",
-      date: "Sep 2024",
-      description: "Explored the current state and future directions of AI in Parkinson Diagnosys.",
-      slidesUrl: "/cp_keynote.pdf",
-      thumbnail: "/cp_thumbnail.jpg",
-      videoUrl: "" // Added empty videoUrl property
-    },
-    {
-      id: 2,
-      title: 'Really Important Talk',
-      event: 'Life', // Fixed incorrect property name 'evento' to 'event'
-      location: 'World',
-      date: 'Eternity',
-      description: 'This is a really important talk that you should watch.',
-      videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
-      thumbnail: 'https://t4.ftcdn.net/jpg/05/20/17/95/360_F_520179522_wrI8zucLkyCbBylaMXL8RMd8Jt4iniZR.jpg'
-    }
-  ];
-
   return (
-    <div className="bg-dark min-h-screen">
+    <div className="bg-background min-h-screen">
       <Navbar />
       {/* Header */}
       <section className="pt-32 pb-16 px-4">
@@ -92,7 +48,7 @@ const Papers = () => {
           <span className="text-sm uppercase tracking-wider text-accent mb-2 inline-block">
             Research
           </span>
-          <h1 className="font-display mb-6">Papers & Talks</h1>
+          <h1 className="font-display mb-6 text-foreground">Papers & Talks</h1>
           <p className="text-muted-foreground max-w-2xl mx-auto">
             My published research papers, along with presentations and invited
             talks at conferences, events and seminars.
@@ -106,17 +62,17 @@ const Papers = () => {
           <Tabs defaultValue="papers" className="w-full" onValueChange={setActiveTab}>
             {/* Tab List */}
             <div className="flex justify-center mb-8">
-              <TabsList className="glass-morphism p-1">
+              <TabsList className="glass-morphism p-1 bg-card border border-border">
                 <TabsTrigger
                   value="papers"
-                  className="data-[state=active]:bg-accent/20 "
+                  className="data-[state=active]:bg-accent data-[state=active]:text-accent-foreground"
                 >
                   Academic Papers
                 </TabsTrigger>
 
                 <TabsTrigger
                   value="talks"
-                  className="data-[state=active]:bg-accent/20"
+                  className="data-[state=active]:bg-accent data-[state=active]:text-accent-foreground"
                 >
                   Talks & Presentations
                 </TabsTrigger>
@@ -126,11 +82,11 @@ const Papers = () => {
             {/* Papers Tab */}
             <TabsContent value="papers" key="papers" className="mt-0">
               <div className="container mx-auto max-w-3xl">
-                <div className="grid grid-cols-1 md:grid-cols-1 gap-8 transition-opacity duration-500 ease-in-out opacity-100 container mx-auto">
+                <div className="grid grid-cols-1 md:grid-cols-1 gap-6 transition-opacity duration-500 ease-in-out opacity-100 container mx-auto">
                   {papers.length > 0 ? (
-                    papers.map((paper) => (
+                    papers.map((paper, index) => (
                       <PaperCard
-                        key={paper.id}
+                        key={index}
                         title={paper.title}
                         authors={paper.authors}
                         conference={paper.conference}
@@ -153,10 +109,10 @@ const Papers = () => {
               <div className="container mx-auto max-w-3xl">
                 <div className="grid grid-cols-1 gap-6 transition-opacity duration-500 ease-in-out opacity-100">
                   {talks.length > 0 ? (
-                    talks.map((talk) => (
+                    talks.map((talk, index) => (
                       <div
-                        key={talk.id}
-                        className="glass-morphism p-6 rounded-xl hover-card"
+                        key={index}
+                        className="glass-morphism p-6 rounded-xl hover-card bg-card border border-border"
                       >
                         <div className="flex flex-col md:flex-row gap-6">
                           <div className="md:w-1/4">
@@ -187,14 +143,14 @@ const Papers = () => {
                             </div>
                           </div>
                           <div className="flex-1">
-                            <h3 className="text-xl font-semibold">
+                            <h3 className="text-xl font-semibold text-foreground">
                               {talk.title}
                             </h3>
                             <p className="text-sm text-muted-foreground">
                               {talk.event} - {talk.date}
                             </p>
                             <p className="mt-2 text-muted-foreground">
-                              {talk.description}
+                              {talk.content.split('\n\n')[0].replace('#', '').trim()}
                             </p>
                             <div className="mt-4 flex space-x-4">
                               {talk.videoUrl && (

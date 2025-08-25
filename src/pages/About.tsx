@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/collapsible";
 import { Calendar } from "lucide-react";
 import Navbar from "@/components/Navbar";
+import { aboutContent } from "@/lib/generatedContentLoader";
 
 const About = () => {
   // Refs for sections that will fade in
@@ -49,56 +50,52 @@ const About = () => {
   const Bio = () => {
     const [showFullBio, setShowFullBio] = useState(false);
 
+    // Split bio content into short and long parts
+    const bioContent = aboutContent.bio.content;
+    const longBioStart = bioContent.indexOf('<!-- LONG_BIO_START -->');
+    const longBioEnd = bioContent.indexOf('<!-- LONG_BIO_END -->');
+    
+    const shortBio = longBioStart > -1 ? bioContent.substring(0, longBioStart).trim() : bioContent;
+    const longBio = longBioStart > -1 && longBioEnd > -1 ? 
+      bioContent.substring(longBioStart + 24, longBioEnd).trim() : 
+      bioContent;
+
     return (
 
       <section ref={bioRef} className="py-16 section-fade-in max-w-3xl mx-auto">
         <div className="container mx-auto">
           <div className="flex flex-col md:flex-row gap-12 items-center">            
             <div className="">
-              <h2 className="text-3xl font-display mb-6">My Journey</h2>
+              <h2 className="text-3xl font-display mb-6 text-foreground">My Journey</h2>
               
               {!showFullBio ? (
                 <>
                   <div className="prose text-muted-foreground">
-                    <p className="mb-4">
-                      Undergraduate Information Systems student at the Federal University of Pernambuco (UFPE), focused on machine learning and AI. Currently working as a researcher at Geraia (Generative AI and LLMs).
-                    </p>
-                    <p className="mb-4">
-                      Co-founded Ligia (AI League at UFPE) and previously co-founded the startup redduo.ai. My research interests include computer vision and energy-efficient machine learning.
-                    </p>
+                    {shortBio.split('\n\n').map((paragraph, index) => (
+                      <p key={index} className="mb-4">
+                        {paragraph}
+                      </p>
+                    ))}
                   </div>
                   <Button 
                     onClick={() => setShowFullBio(true)} 
-                    variant="ghost"
-                    className="text-muted-foreground transition-colors duration-200"
+                    variant="outline"
+                    className="text-muted-foreground border-border hover:bg-accent hover:text-accent-foreground transition-colors duration-200"
                   >
                     Long bio
                   </Button>
                 </>
               ) : (
                 <div className="prose text-muted-foreground">
-                  <p className="text-muted-foreground mb-4">
-                  Undergraduate Information Systems student at the Federal University of Pernambuco (UFPE), focused on data science and machine learning. Served as a teaching assistant for Computational Creativity and Introduction to Deep Learning.
-                  </p>
-                  <p className="text-muted-foreground mb-4">
-                  During my sophomore year, I joined the Brazilian National Institute of Software Engineering as a Research Assistant in the Smart Cities and IoT Group, advised by Kiev Gama, Ana Paula Chaves (NAU), and Danilo Ribeiro (Cesar School). I co-authored papers accepted at IHC 2024 and SBSI 2025.
-                  </p>
-                  <p className="text-muted-foreground mb-4">
-                  At the end of that year, I joined the Geraia group, where I research Generative AI — evaluating large language models in Portuguese and other emerging languages. I'm also interested in energy-efficient generative models, with a focus on low-resource deployment scenarios.
-                  </p>
-                  <p className="text-muted-foreground mb-4">
-                  I co-founded Ligia — UFPE’s Artificial Intelligence League, a nonprofit initiative dedicated to AI research, competitions, and education. As Outreach Director, I lead strategic partnerships, organize AI-centered events, and develop educational materials to promote AI understanding and application across disciplines.
-                  </p>
-                  <p className="text-muted-foreground mb-4">
-                  I also co-founded the AI startup redduo.ai, where I briefly served as Chief Data Officer and co-Chief Technology Officer.
-                  </p>
-                  <p className="text-muted-foreground mb-4">
-                  Outside academics, I enjoy photography, reading, sports, and creative coding.
-                  </p>
+                  {longBio.split('\n\n').map((paragraph, index) => (
+                    <p key={index} className="text-muted-foreground mb-4">
+                      {paragraph}
+                    </p>
+                  ))}
                   <Button 
                     onClick={() => setShowFullBio(false)} 
-                    variant="ghost"
-                    className="text-muted-foreground transition-colors duration-200"
+                    variant="outline"
+                    className="text-muted-foreground border-border hover:bg-accent hover:text-accent-foreground transition-colors duration-200"
                   >
                     Short bio
                   </Button>
@@ -117,13 +114,121 @@ const About = () => {
       <section className="">
         <div className="container mx-auto text-center">
           <span className="text-sm uppercase tracking-wider text-accent mb-2 inline-block">About Me</span>
-          <h1 className="font-display mb-6">The Story So Far</h1>
+          <h1 className="font-display mb-6 text-foreground">The Story So Far</h1>
           <p className="text-muted-foreground max-w-2xl mx-auto">
             Get to know my background, skills, and the journey that led me to become a data scientist and machine learning engineer.
           </p>
         </div>
       </section>
     );
+  };
+
+  // Parse experiences from markdown content with improved logic
+  const parseExperiences = (content: string) => {
+    const sections: Record<string, any[]> = {
+      education: [],
+      work: [],
+      research: [],
+      extracurricular: [],
+      teaching: []
+    };
+    
+    const lines = content.split('\n');
+    let currentSection = '';
+    let currentItem: any = null;
+    let descriptionLines: string[] = [];
+    
+    for (const line of lines) {
+      const trimmedLine = line.trim();
+      
+      // Check for section headers
+      if (trimmedLine === '## Education') {
+        // Save previous item if exists
+        if (currentItem && currentSection) {
+          currentItem.description = descriptionLines.join(' ');
+          sections[currentSection].push(currentItem);
+        }
+        currentSection = 'education';
+        currentItem = null;
+        descriptionLines = [];
+        continue;
+      } else if (trimmedLine === '## Work Experience') {
+        // Save previous item if exists
+        if (currentItem && currentSection) {
+          currentItem.description = descriptionLines.join(' ');
+          sections[currentSection].push(currentItem);
+        }
+        currentSection = 'work';
+        currentItem = null;
+        descriptionLines = [];
+        continue;
+      } else if (trimmedLine === '## Research Experience') {
+        // Save previous item if exists
+        if (currentItem && currentSection) {
+          currentItem.description = descriptionLines.join(' ');
+          sections[currentSection].push(currentItem);
+        }
+        currentSection = 'research';
+        currentItem = null;
+        descriptionLines = [];
+        continue;
+      } else if (trimmedLine === '## Extracurricular') {
+        // Save previous item if exists
+        if (currentItem && currentSection) {
+          currentItem.description = descriptionLines.join(' ');
+          sections[currentSection].push(currentItem);
+        }
+        currentSection = 'extracurricular';
+        currentItem = null;
+        descriptionLines = [];
+        continue;
+      } else if (trimmedLine === '## Teaching') {
+        // Save previous item if exists
+        if (currentItem && currentSection) {
+          currentItem.description = descriptionLines.join(' ');
+          sections[currentSection].push(currentItem);
+        }
+        currentSection = 'teaching';
+        currentItem = null;
+        descriptionLines = [];
+        continue;
+      }
+      
+      // Check for new item
+      if (trimmedLine.startsWith('- **') && currentSection) {
+        // Save previous item if exists
+        if (currentItem) {
+          currentItem.description = descriptionLines.join(' ');
+          sections[currentSection].push(currentItem);
+        }
+        
+        // Start new item
+        const titleMatch = trimmedLine.match(/- \*\*(.*?)\*\*/);
+        currentItem = {
+          title: titleMatch ? titleMatch[1] : '',
+          period: '',
+          organization: '',
+          description: ''
+        };
+        descriptionLines = [];
+      } else if (currentItem && trimmedLine.match(/^\d{4} - (?:Present|\d{4})/)) {
+        currentItem.period = trimmedLine;
+      } else if (currentItem && trimmedLine && !trimmedLine.startsWith('##') && !trimmedLine.startsWith('- **')) {
+        if (!currentItem.organization) {
+          currentItem.organization = trimmedLine;
+        } else {
+          descriptionLines.push(trimmedLine);
+        }
+      }
+    }
+    
+    // Don't forget the last item
+    if (currentItem && currentSection) {
+      currentItem.description = descriptionLines.join(' ');
+      sections[currentSection].push(currentItem);
+    }
+    
+    return sections;
   };
 
   // Education and Experience component
@@ -141,9 +246,9 @@ const About = () => {
     }
 
     const ExperienceItem = ({ title, period, organization, description }: SectionItem) => (
-      <div className="glass-morphism p-6 border border-gray-200 rounded-xl transition-all duration-300 hover:scale-102 hover:shadow-md">
+      <div className="glass-morphism p-6 border border-border rounded-xl transition-all duration-300 hover:scale-[1.02] hover:shadow-md bg-card">
         <div className="flex justify-between items-start mb-2">
-          <h4 className="text-xl font-medium">{title}</h4>
+          <h4 className="text-xl font-medium text-foreground">{title}</h4>
           <span className="text-accent">{period}</span>
         </div>
         <p className="text-muted-foreground mb-2">{organization}</p>
@@ -153,7 +258,7 @@ const About = () => {
 
     const Section = ({ title, items }: SectionProps) => (
       <div>
-        <h3 className="text-xl font-display mb-6">{title}</h3>
+        <h3 className="text-xl font-display mb-6 text-foreground">{title}</h3>
         <div className="space-y-8">
           {items.map((item, index) => (
             <ExperienceItem
@@ -168,107 +273,43 @@ const About = () => {
       </div>
     );
 
-    const educationItems = [
-      {
-        title: "B.Sc. in Information Systems",
-        period: "2025 - Present",
-        organization: "Federal University of Pernambuco",
-        description: "After three years majoring in Statistics, transferred to Information Systems/Computer Science.",
-      },
-      {
-        title: "B.Sc. in Statistics",
-        period: "2022 - 2024",
-        organization: "Federal University of Pernambuco",
-        description: "Major in Statistics but with research focus on machine learning and computational intelligence.",
-      },
-    ];
-
-    const professionalItems = [
-      {
-        title: "Machine Learning Engineer (Freelancer)",
-        period: "2024 - Present",
-        organization: "Confidential Client - Under NDA",
-        description: "Designed and implemented a complete computer vision pipeline for edge deployment, including dataset creation, image pre-processing, model training, and inference. Managed cluster setup and optimization for efficient large-scale training. Work conducted under NDA, with a focus on scalable, resource-efficient solutions for AI on edge devices.",
-
-      },
-      {
-        title: "Co-founder and Data Scientist",
-        period: "2023 - 2024",
-        organization: "redduo.ai",
-        description: "Worked as a Data Scientist, conducting data analysis to support business intelligence initiatives and developing software automations. Additionally served as an AI Scientist, contributing to the development of core AI models with a focus on optimization and performance enhancement.",
-      },
-
-    ];
-
-    const researchItems = [
-      {
-        title: "Researcher",
-        period: "2023 - Present",
-        organization: "Geraia, Federal University of Pernambuco",
-        description: "Conducting research in Generative AI, focusing on evaluating Language Models in Portuguese for performance, scalability, and adaptability in emergent languages. Investigating energy-efficient AI for sustainable training and inference, optimizing generative models for deployment on low-resource devices.",
-      },
-      {
-        title: "Research Assistant",
-        period: "2023 - 2024",
-        organization: "National Institute of Software Engineering (INES)",
-        description: "While working at the Brazilian Ministry of Science and Technology - National Institute of Software Engineering I have assisted in developing quantitative tools for analysis and enhancing accessibility techniques for apps designed to support adults on the autism spectrum.",
-      },
-    ];
-
-
-    const extracurricularItems = [
-      {
-        title: "Co-founder and Outreach Director",
-        period: "2024 - Present",
-        organization: "Ligia",
-        description: "Ligia is a nonprofit based at the Federal University of Pernambuco, focused on research, competitions, and education in Artificial Intelligence. We aim to support innovation and develop talent within the university and nearby communities. Our work includes advancing research, building real-world AI solutions, and making AI and Data Science education more accessible through free, high-quality content.",
-      },
-    ];
-
-    const teachingItems = [
-      {
-        title: "Introduction to Deep Learning",
-        period: "2024 - Present",
-        organization: "Federal University of Pernambuco",
-        description: "Taught fundamental Deep Learning concepts, covering Recurrent Neural Networks (RNNs), Convolutional Neural Networks (CNNs), and Transformer architectures.",
-      },
-      {
-        title: "Computational Creativity",
-        period: "2023 - 2025",
-        organization: "Federal University of Pernambuco",
-        description: "Assisted in a Computational Creativity course that investigated the use of Generative AI (Diffusion Models, LLMs) in creative applications.",
-      },
-    ];
+    // Parse experiences from markdown
+    const experiences = parseExperiences(aboutContent.experiences.content);
+    const educationItems = experiences.education;
+    const professionalItems = experiences.work;
+    const researchItems = experiences.research;
+    const extracurricularItems = experiences.extracurricular;
+    const teachingItems = experiences.teaching;
 
     return (
       <section ref={educationRef} className="py-16 section-fade-in">
         <div className="container mx-auto">
-          <h2 className="text-3xl font-display mb-10 text-center">Education & Experience</h2>
+          <h2 className="text-3xl font-display mb-10 text-center text-foreground">Education & Experience</h2>
           
           <div className="max-w-3xl mx-auto">
             <div className="mb-12">
               <Section title="Education" items={educationItems} />
             </div>
             
-            <Separator className="my-12 bg-white/10" />
+            <Separator className="my-12 bg-border" />
             
             <div>
               <Section title="Work Experience" items={professionalItems} />
             </div>
 
-            <Separator className="my-12 bg-white/10" />
+            <Separator className="my-12 bg-border" />
 
             <div>
               <Section title="Research Experience" items={researchItems} />
             </div>
 
-            <Separator className="my-12 bg-white/10" />
+            <Separator className="my-12 bg-border" />
 
             <div>
               <Section title="Extracurricular" items={extracurricularItems} />
             </div>
 
-            <Separator className="my-12 bg-white/10" />
+            <Separator className="my-12 bg-border" />
 
             <div>
               <Section title="Teaching" items={teachingItems} />
@@ -277,6 +318,40 @@ const About = () => {
         </div>
       </section>
     );
+  };
+
+  // Parse skills from markdown content with improved logic
+  const parseSkills = (content: string) => {
+    const sections: Record<string, string[]> = {
+      programming: [],
+      tools: [],
+      interests: []
+    };
+    
+    const lines = content.split('\n');
+    let currentSection = '';
+    
+    for (const line of lines) {
+      const trimmedLine = line.trim();
+      
+      if (trimmedLine === '## Programming Languages') {
+        currentSection = 'programming';
+        continue;
+      } else if (trimmedLine === '## Tools & Frameworks') {
+        currentSection = 'tools';
+        continue;
+      } else if (trimmedLine === '## Research Interests') {
+        currentSection = 'interests';
+        continue;
+      }
+      
+      if (trimmedLine.startsWith('- ') && currentSection) {
+        const skill = trimmedLine.substring(2);
+        sections[currentSection].push(skill);
+      }
+    }
+    
+    return sections;
   };
 
   // Skills component
@@ -294,12 +369,12 @@ const About = () => {
 
     const SkillsGroup = ({ title, items, showLabels = false }: SkillsGroupProps) => (
       <div>
-        <h3 className="text-xl font-display mb-6">{title}</h3>
+        <h3 className="text-xl font-display mb-6 text-foreground">{title}</h3>
         <div className={`grid grid-cols-4 ${showLabels ? 'sm:grid-cols-6' : ''} gap-4`}>
           {items.map((item, index) => (
             <div 
               key={index} 
-              className={`glass-morphism p-4 rounded-lg flex items-center justify-center ${showLabels ? 'flex-col' : ''} transition-all duration-300 hover:bg-accent/0 hover:scale-105 hover:shadow-lg`}
+              className={`glass-morphism p-4 rounded-lg flex items-center justify-center ${showLabels ? 'flex-col' : ''} transition-all duration-300 hover:bg-accent/5 hover:scale-105 hover:shadow-lg bg-card border border-border`}
             >
               <img 
                 src={item.icon} 
@@ -312,28 +387,26 @@ const About = () => {
       </div>
     );
 
-    const ResearchInterests = () => (
-      <div>
-        <h3 className="text-xl font-display mt-12 mb-6">Research Interests</h3>
-        <div className="glass-morphism p-6 rounded-xl transition-all duration-300 hover:bg-accent/0 hover:shadow-lg">
-          <ul className="space-y-2 text-muted-foreground grid grid-cols-1 sm:grid-cols-1">
-            {[
-              "Bio-inspired computing", 
-              "Computer Vision & Image Processing", 
-              "Efficient AI/TinyML", 
-              "Diffusion and Energy-based models", 
-              "Meta-learning",
-              "Reinforcement Learning",
-            ].map((interest, index) => (
-              <li key={index} className="flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full bg-accent"></div>
-                <span> {interest}</span>
-              </li>
-            ))}
-          </ul>
+    const ResearchInterests = () => {
+      const skills = parseSkills(aboutContent.interests.content);
+      const interests = skills.interests;
+      
+      return (
+        <div>
+          <h3 className="text-xl font-display mt-12 mb-6 text-foreground">Research Interests</h3>
+          <div className="glass-morphism p-6 rounded-xl transition-all duration-300 hover:bg-accent/5 hover:shadow-lg bg-card border border-border">
+            <ul className="space-y-2 text-muted-foreground grid grid-cols-1 sm:grid-cols-1">
+              {interests.map((interest, index) => (
+                <li key={index} className="flex items-center gap-2">
+                  <div className="w-2 h-2 rounded-full bg-accent"></div>
+                  <span> {interest}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
-      </div>
-    );
+      );
+    };
 
     const programmingLanguages = [
       { icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" },
@@ -360,7 +433,7 @@ const About = () => {
     return (
       <section ref={skillsRef} className="py-16 section-fade-in">
         <div className="container mx-auto">
-          <h2 className="text-3xl font-display mb-10 text-center">Skills & Interests</h2>
+          <h2 className="text-3xl font-display mb-10 text-center text-foreground">Skills & Interests</h2>
           
           <div className="grid grid-cols-1 md:grid-cols-1 gap-12 max-w-3xl mx-auto">
             <SkillsGroup title="Programming Languages" items={programmingLanguages} />
@@ -374,8 +447,9 @@ const About = () => {
       </section>
     );
   };
-   return (
-    <div className="bg-white min-h-screen">
+  
+  return (
+    <div className="bg-background min-h-screen">
       <Navbar />
       <main className="pt-28 md:pt-32 pb-20 px-4">
         <Header />

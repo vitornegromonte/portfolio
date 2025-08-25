@@ -1,69 +1,74 @@
-# Welcome to your Lovable project
+# Personal Portfolio
 
-## Project info
+This is my personal portfolio website built with React, TypeScript, and Vite.
 
-**URL**: https://lovable.dev/projects/375da44a-51e9-402e-8dbd-8c5e1fb90795
+## Deployment to GitHub Pages
 
-## How can I edit this code?
+This repository is configured to automatically deploy to GitHub Pages using GitHub Actions.
 
-There are several ways of editing your application.
+### Automatic Deployment
 
-**Use Lovable**
+The site is automatically deployed to GitHub Pages whenever changes are pushed to the `main` branch. The deployment workflow is defined in `.github/workflows/deploy.yml`.
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/375da44a-51e9-402e-8dbd-8c5e1fb90795) and start prompting.
+### Manual Deployment
 
-Changes made via Lovable will be committed automatically to this repo.
+If you need to deploy manually, you can use the following commands:
 
-**Use your preferred IDE**
+```bash
+# Build the project
+npm run build
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+# Deploy to GitHub Pages
+npm run deploy
 ```
 
-**Edit a file directly in GitHub**
+### Custom Domain
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+The custom domain `vitornegromonte.github.io` is configured in the `public/CNAME` file.
 
-**Use GitHub Codespaces**
+## Development
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+### Getting Started
 
-## What technologies are used for this project?
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-This project is built with .
+2. Start the development server:
+   ```bash
+   npm run dev
+   ```
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+3. Open your browser to `http://localhost:8080`
 
-## How can I deploy this project?
+### Building for Production
 
-Simply open [Lovable](https://lovable.dev/projects/375da44a-51e9-402e-8dbd-8c5e1fb90795) and click on Share -> Publish.
+```bash
+npm run build
+```
 
-## I want to use a custom domain - is that possible?
+The build output will be in the `dist` directory.
 
-We don't support custom domains (yet). If you want to deploy your project under your own domain then we recommend using Netlify. Visit our docs for more details: [Custom domains](https://docs.lovable.dev/tips-tricks/custom-domain/)
+### Updating Content
+
+Content is managed through markdown files in the `content` directory:
+- `content/papers/` - Academic papers
+- `content/projects/` - Projects
+- `content/talks/` - Talks and presentations
+- `content/about/` - About page content
+
+To update content, simply edit the markdown files and rebuild the site.
+
+## Technologies Used
+
+- React with TypeScript
+- Vite for building
+- Tailwind CSS for styling
+- shadcn/ui components
+- GitHub Actions for CI/CD
+- GitHub Pages for hosting
+
+## License
+
+This project is licensed under the MIT License.
