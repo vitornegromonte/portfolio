@@ -141,7 +141,8 @@ const Index = () => {
             </div>
             
             <p className="text-muted-foreground mb-6 mx-auto leading-relaxed">
-              {shortBio}
+              I'm a researcher focused on using <span className="text-accent font-medium">Meta-Learning</span>, 
+              <span className="text-accent font-medium"> Knowledge Representation</span>, and <span className="text-accent font-medium">Data-Centric Modeling</span> to create more transparent and interpretable AI systems.
             </p>
             
             <div className="flex justify-center gap-6 mt-7">
