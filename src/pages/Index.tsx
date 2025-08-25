@@ -5,7 +5,77 @@ import Navbar from "@/components/Navbar";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { papers, projects } from "@/lib/generatedContentLoader";
+import { papers, projects, aboutContent } from "@/lib/generatedContentLoader";
+
+// Parse bio content to separate short and long versions
+const parseBioContent = (content: string) => {
+  const longBioStart = content.indexOf('<!-- LONG_BIO_START -->');
+  const longBioEnd = content.indexOf('<!-- LONG_BIO_END -->');
+  
+  const shortBio = longBioStart > -1 ? content.substring(0, longBioStart).trim() : content;
+  const longBio = longBioStart > -1 && longBioEnd > -1 ? 
+    content.substring(longBioStart + 24, longBioEnd).trim() : 
+    content;
+    
+  return { shortBio, longBio };
+};
+
+// Parse research interests from markdown content
+const parseResearchInterests = (content: string) => {
+  const lines = content.split('\n');
+  const interests: { title: string; description: string }[] = [];
+  
+  // Look for the research interests section
+  let inResearchInterests = false;
+  let currentInterest: { title: string; description: string } | null = null;
+  
+  for (const line of lines) {
+    const trimmedLine = line.trim();
+    
+    if (trimmedLine === '## Research Interests') {
+      inResearchInterests = true;
+      continue;
+    }
+    
+    if (inResearchInterests) {
+      if (trimmedLine.startsWith('## ')) {
+        // End of research interests section
+        if (currentInterest) {
+          interests.push(currentInterest);
+        }
+        break;
+      }
+      
+      if (trimmedLine.startsWith('- **') && trimmedLine.endsWith('**')) {
+        // Save previous interest if exists
+        if (currentInterest) {
+          interests.push(currentInterest);
+        }
+        
+        // Start new interest
+        const titleMatch = trimmedLine.match(/- \*\*(.*?)\*\*/);
+        currentInterest = {
+          title: titleMatch ? titleMatch[1] : '',
+          description: ''
+        };
+      } else if (currentInterest && trimmedLine && !trimmedLine.startsWith('- **')) {
+        // Add description line
+        if (currentInterest.description) {
+          currentInterest.description += ' ' + trimmedLine;
+        } else {
+          currentInterest.description = trimmedLine;
+        }
+      }
+    }
+  }
+  
+  // Don't forget the last interest
+  if (currentInterest && inResearchInterests) {
+    interests.push(currentInterest);
+  }
+  
+  return interests;
+};
 
 const Index = () => {
   // Get selected papers (where selected: 1)
@@ -13,6 +83,37 @@ const Index = () => {
 
   // Get selected projects (where selected: 1)
   const selectedProjects = projects.filter(project => project.selected === 1);
+  
+  // Parse bio content
+  const { shortBio } = parseBioContent(aboutContent.bio.content);
+  
+  // Parse research interests
+  const researchInterests = parseResearchInterests(aboutContent.interests.content);
+  
+  // Define research interest cards with proper content from markdown
+  const researchInterestCards = researchInterests.length > 0 
+    ? researchInterests.slice(0, 4).map(interest => ({
+        title: interest.title,
+        description: interest.description
+      }))
+    : [
+        {
+          title: "Meta-Learning",
+          description: "Focused on creating learning paradigms and optimization strategies that allow models to quickly adapt and generalize from minimal data."
+        },
+        {
+          title: "Data-Centric Modeling",
+          description: "Engineering systematic methodologies for data curation, augmentation, and annotation to improve model performance and reliability."
+        },
+        {
+          title: "Natural Language Processing",
+          description: "Building computational models for semantic representation, reasoning, and generation to solve problems in machine translation and information extraction."
+        },
+        {
+          title: "Knowledge Representation",
+          description: "Investigating the underlying mathematical principles of high-dimensional embeddings, focusing on the geometric and algebraic structures within vector spaces to formally model semantic relationships."
+        }
+      ];
   
   return (
     <div className="bg-background min-h-screen">
@@ -40,8 +141,7 @@ const Index = () => {
             </div>
             
             <p className="text-muted-foreground mb-6 mx-auto leading-relaxed">
-              I'm a researcher focused on using <span className="text-accent font-medium">Meta-Learning</span>, 
-              <span className="text-accent font-medium"> Knowledge Representation</span>, and <span className="text-accent font-medium">Data-Centric Modeling</span> to create more transparent and interpretable AI systems.
+              {shortBio}
             </p>
             
             <div className="flex justify-center gap-6 mt-7">
@@ -152,29 +252,12 @@ const Index = () => {
             <h2 className="text-xl font-display text-foreground mb-6">Research Interests</h2>
             
             <div className="grid grid-cols-1 md:grid-cols-1 gap-4">
-
-
-              <div className="glass-morphism bg-card p-5 rounded-lg hover:bg-accent/5 transition-colors border border-border">
-                <h3 className="font-medium mb-2 text-foreground">Meta-Learning</h3>
-                <p className="text-muted-foreground text-sm">Focused on creating learning paradigms and optimization strategies that allow models to quickly adapt and generalize from minimal data.</p>
-              </div>
-              
-              <div className="glass-morphism bg-card p-5 rounded-lg hover:bg-accent/5 transition-colors border border-border">
-                <h3 className="font-medium mb-2 text-foreground">Data-Centric Modeling</h3>
-                <p className="text-muted-foreground text-sm">Engineering systematic methodologies for data curation, augmentation, and annotation to improve model performance and reliability.</p>
-              </div>
-              
-              <div className="glass-morphism bg-card p-5 rounded-lg hover:bg-accent/5 transition-colors border border-border">
-                <h3 className="font-medium mb-2 text-foreground">Natural Language Processing</h3>
-                <p className="text-muted-foreground text-sm">Building computational models for semantic representation, reasoning, and generation to solve problems in machine translation and information extraction.</p>
-              </div>
-
-              <div className="glass-morphism bg-card p-5 rounded-lg hover:bg-accent/5 transition-colors border border-border">
-                <h3 className="font-medium mb-2 text-foreground">Knowledge Representation</h3>
-                <p className="text-muted-foreground text-sm">Investigating the underlying mathematical principles of high-dimensional embeddings, focusing on the geometric and algebraic structures within vector spaces to formally model semantic relationships.</p>
-              </div>
-
-
+              {researchInterestCards.map((interest, index) => (
+                <div key={index} className="glass-morphism bg-card p-5 rounded-lg hover:bg-accent/5 transition-colors border border-border">
+                  <h3 className="font-medium mb-2 text-foreground">{interest.title}</h3>
+                  <p className="text-muted-foreground text-sm">{interest.description}</p>
+                </div>
+              ))}
             </div>
           </div>
         </section>
